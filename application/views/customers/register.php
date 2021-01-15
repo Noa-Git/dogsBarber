@@ -20,9 +20,7 @@
 
 <?php echo form_open('Customers/save_customer'); ?>
 
-    <label>Id</label>
-    <input type="text" name="id" /><br />
-
+ 
     <label>First Name</label>
     <input type="text" name="fname" required /><br>
      <label>Last Name</label>
