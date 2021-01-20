@@ -22,8 +22,11 @@ class Customers_model extends CI_Model {
     public function save($data) {
         $this->db->db_debug = FALSE;
         $error = null;
-        $encrypted = $this->encrypt($data['password']);
+        //Generating a random safe for encryption ID. will also be used as salt for password
+        $id = $this->generateId();
+        $encrypted = $this->encrypt($data['password'], $id);
         $data['password'] = $encrypted;
+        $data['id'] = $id;
         if (!$this->db->insert('Customer', $data)) {
             $error = $this->db->error();
         }
@@ -36,7 +39,7 @@ class Customers_model extends CI_Model {
 		if ($query->result()!=null) {
 			$res = $query->result();
 			$password = $res[0]->password;
-			$encrypted = $this->encrypt($data['password']);
+			$encrypted = $this->encrypt($data['password'], $res[0]->id);
 			if ($password == $encrypted) {
 				return $query->result();
 			}
@@ -44,11 +47,16 @@ class Customers_model extends CI_Model {
 		return null;
     }
     
-    private function encrypt($password){
-    	//salt created by hashing the reversed password
-        $salt = md5(strrev($password));
+    private function encrypt($password, $salt){
+    	//salt is the randomly generated id
         $encrypted = md5($password.$salt);
         return $encrypted;
     }
+
+    private function generateId (){
+		$strong_result = true;
+		$bytes = openssl_random_pseudo_bytes(16, $strong_result);
+		return  bin2hex($bytes);
+	}
 
 }
