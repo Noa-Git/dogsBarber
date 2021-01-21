@@ -35,25 +35,43 @@ class Customers extends CI_Controller {
         $this->load->view('customers/register', $data);
     }
 
-    public function save_customer() {  
-//        $this->form_validation->set_rules('name', 'name', 'required|max_length[20]');
-//        if ($this->form_validation->run() == FALSE) {
-//            $error = ['message' => 'Name can not be more than 20 charachters'];
-//            $this->register($error);
-//            return;
-//        }
-//        $this->form_validation->set_rules('password', 'password', 'required|min_length[6]');
-//        if ($this->form_validation->run() == FALSE) {
-//            $error = ['message' => 'Password have to contain at least 6 charachters'];
-//            $this->register($error);
-//            return;
-//        }
-//        $this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
-//        if ($this->form_validation->run() == FALSE) {
-//            $error = ['message' => 'Password does not match!'];
-//            $this->register($error);
-//            return;
-//        }
+    public function save_customer() {
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		if ($this->form_validation->run() == FALSE) {
+			$error = ['message' => 'Please insert your email address'];
+			$this->register($error);
+			return;
+		}
+        $this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
+        if ($this->form_validation->run() == FALSE) {
+            $error = ['message' => 'Please insert your first name'];
+            $this->register($error);
+            return;
+        }
+		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		if ($this->form_validation->run() == FALSE) {
+			$error = ['message' => 'Please insert your first name'];
+			$this->register($error);
+			return;
+		}
+		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
+		if ($this->form_validation->run() == FALSE) {
+			$error = ['message' => 'Please insert your phone number'];
+			$this->register($error);
+			return;
+		}
+        $this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
+        if ($this->form_validation->run() == FALSE) {
+            $error = ['message' => 'Password have to contain at least 4 charachters'];
+            $this->register($error);
+            return;
+        }
+        $this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
+        if ($this->form_validation->run() == FALSE) {
+            $error = ['message' => 'Password does not match!'];
+            $this->register($error);
+            return;
+        }
         //preparing data for db
          $data = array(
             'email' => $this->input->post('email'),
