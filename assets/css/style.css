@@ -1,0 +1,29 @@
+
+nav {
+	background-color: #cf5a4c;
+	overflow: auto;
+	margin-bottom: 3%;
+	padding-bottom: 1.5%;
+}
+
+ul {
+	list-style-type: none;
+}
+
+li {
+	float: left;
+	width: 20%;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	font-size: 30px;
+	font-weight: bold;
+}
+footer {
+	background-color: #cf5a4c;
+	overflow: auto;
+	margin-top: 3%;
+	padding-top: 1.5%;
+}

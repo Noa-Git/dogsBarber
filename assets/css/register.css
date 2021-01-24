@@ -1,0 +1,16 @@
+.error {
+	color: red;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+label {
+	display: inline-block;
+	margin-right: 5px;
+	width: 5%;
+}
+
+.text{
+	width: 40%;
+}
+
