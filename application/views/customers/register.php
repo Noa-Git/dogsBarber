@@ -90,7 +90,7 @@
 							}
 						}
 						if (data.success){
-							window.location.href = "<?php echo site_url('Customers/login'); ?>";
+							window.location.href = "<?php echo site_url($_SESSION['referrer']); ?>";
 						}
 					}
 				})

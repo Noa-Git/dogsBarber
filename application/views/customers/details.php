@@ -46,7 +46,7 @@
 		</tr>
 		<?php foreach ($dogs as $dog): ?>
 			<tr>
-				<td><input type="checkbox" <?php echo 'name="'.$dog->id.'"' ?> checked="false"></td>
+				<td><input type="checkbox" <?php echo 'name="'.$dog->id.'"' ?> ></td>
 				<td><?php echo $dog->dog_name;?></td>
 				<td><?php echo $dog->gender?></td>
 				<td><?php echo $dog->age?></td>
@@ -160,6 +160,16 @@
 
 		$('#cancel').on('click', function (){
 			location.reload();
+
+		});
+
+		$('#add_dog').on('click', function (){
+			window.location.href = "<?php echo site_url('dogs/add'); ?>";
+
+		});
+
+		$('#delete_dog').on('click', function (){
+			alert('Not Implemented yet');
 
 		});
 

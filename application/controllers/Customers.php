@@ -46,7 +46,8 @@ class Customers extends CI_Controller {
 
     public function details() {
     	if ($this->session->loggedin == null){
-			redirect("Customers/login");
+			$this->session->set_userdata('referrer',current_url());
+    		redirect("Customers/login");
 		}
     	$id = $this->session->id;
 		$data['customer'] =$this->Customers_model->get_customer_by_id($id);
@@ -110,7 +111,7 @@ class Customers extends CI_Controller {
             $data['loggedin'] = '1';
             $this->session->set_userdata($data);
             $this->session->unset_userdata('password');
-
+			$this->session->set_userdata('referrer','customers/login');
             echo json_encode(array('success' => true));
         }
     }
@@ -189,7 +190,13 @@ class Customers extends CI_Controller {
             $check[0]->loggedin = '1';
             $this->session->set_userdata((array)$check[0]);
             $this->session->unset_userdata('password');
-            redirect("Customers/success");
+            if ($this->session->has_userdata('referrer')){
+				redirect($this->session->referrer);
+			}
+            else {
+				redirect("Customers/success");
+			}
+
         }
     }
 
@@ -200,28 +207,13 @@ class Customers extends CI_Controller {
 			'last_name',
 			'phone_number',
 			'id',
-            'loggedin'
+            'loggedin',
+			'referrer'
         );
         $this->session->unset_userdata($data);
         $this->login();
     }
 
-	private function validation_rules_user()
-	{
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
-		$this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
-		$this->form_validation->set_rules('street', 'Street', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('city', 'City', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
-	}
 
-	private function validation_rules_address(){
-
-	}
 
 }

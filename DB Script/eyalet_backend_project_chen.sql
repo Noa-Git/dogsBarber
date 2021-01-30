@@ -21,7 +21,7 @@ CREATE TABLE Customer(
                           dog_name VARCHAR(30),
                           weight FLOAT,
                           age INT,
-                          size FLOAT,
+                          size VARCHAR(20),
                           gender VARCHAR(1),
                           FOREIGN KEY(customer_id) REFERENCES Customer(id) ON DELETE CASCADE
       ); CREATE TABLE Employee(
