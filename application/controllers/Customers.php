@@ -6,6 +6,8 @@ class Customers extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Customers_model');
+		$this->load->model('Dogs_model');
+		$this->load->model('Address_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('session');
@@ -19,7 +21,9 @@ class Customers extends CI_Controller {
 
     public function success() {
 
-        echo '<h1> login successfull</h1>';
+//        echo '<h1> login successfull</h1>';
+//        print_r ($this->session->userdata());
+		  redirect("Customers/details");
     }
 
     public function login($error = null) {
@@ -40,13 +44,34 @@ class Customers extends CI_Controller {
 		$this->load->view('templates/footer');
     }
 
+    public function details() {
+    	if ($this->session->loggedin == null){
+			$this->session->set_userdata('referrer',current_url());
+    		redirect("Customers/login");
+		}
+    	$id = $this->session->id;
+		$data['customer'] =$this->Customers_model->get_customer_by_id($id);
+    	$data['dogs'] = $this->Dogs_model->get_dog_by_cust_id($id);
+		$data['address'] = $this->Address_model->get_address_by_cust_id($id);
+
+
+		$this->load->view('templates/styleCss');
+		$this->load->view('templates/customerDetailsCss');
+		$this->load->view('templates/header');
+		$this->load->view('customers/details', $data);
+		$this->load->view('templates/footer');
+
+	}
+
     public function save_customer() {
+		$this->form_validation->reset_validation();
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
 		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
 		$this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
+
 
 		if ($this->form_validation->run() == false){
 			$errors = array(
@@ -62,13 +87,18 @@ class Customers extends CI_Controller {
 			return;
 		}
 
+
+
 		//preparing data for db
+		$id = $this->Customers_model->generateId();
          $data = array(
             'email' => $this->input->post('email'),
             'first_name' => $this->input->post('fname'),
             'last_name' => $this->input->post('lname'),
             'phone_number' => $this->input->post('phone'),
-            'password' => $this->input->post('password')
+            'password' => $this->input->post('password'),
+			 //Generating a random safe for encryption ID. will also be used as salt for password
+			 'id'=> $id
         );
 
         $error = $this->Customers_model->save($data);
@@ -77,14 +107,74 @@ class Customers extends CI_Controller {
 			echo json_encode($errors);
 
         } else {
+        	$this->Address_model->save(array('customer_id'=>$id));
             $data['loggedin'] = '1';
-            $data['message'] = 'User Registered successfuly';
-            $data['code'] = 1;
             $this->session->set_userdata($data);
-
+            $this->session->unset_userdata('password');
+			$this->session->set_userdata('referrer','customers/login');
             echo json_encode(array('success' => true));
         }
     }
+
+	public function update_customer(){
+		$this->form_validation->reset_validation();
+		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
+		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
+		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
+
+
+		if ($this->form_validation->run() == false){
+			$errors = array(
+				'error' => true,
+				'fname_error' => form_error('fname'),
+				'lname_error' => form_error('lname'),
+				'phone_error' => form_error('phone'),
+				'street_error' => form_error('street'),
+				'house_error' => form_error('house'),
+				'city_error' => form_error('city'),
+				'zip_error' => form_error('zip')
+			);
+			echo json_encode($errors);
+			return;
+		}
+		//preparing data for db
+		$id = $this->session->id;
+		$user_data = array(
+			'first_name' => $this->input->post('fname'),
+			'last_name' => $this->input->post('lname'),
+			'phone_number' => $this->input->post('phone'),
+		);
+
+		$address_data = array (
+			'street' => $this->input->post('street'),
+			'house_number' => $this->input->post('house'),
+			'city' => $this->input->post('city'),
+			'zip_code' => $this->input->post('zip'),
+		);
+
+		$error = $this->Customers_model->update($id, $user_data);
+		if ($error) {
+			$errors = array('error' => true,'db_error' => $error);
+			echo json_encode($errors);
+			return;
+		}
+
+		$error = $this->Address_model->update($id, $address_data);
+		if ($error) {
+			$errors = array('error' => true,'db_error' => $error);
+			echo json_encode($errors);
+			return;
+		}
+
+
+		echo json_encode(array('success' => true));
+
+	}
+
 
     public function auth() {
         $data = array(
@@ -96,20 +186,34 @@ class Customers extends CI_Controller {
             $data['error'] = 'Wrong user name or password';
             $this->login($data);
         } else {
-            $data['email'] = $check[0]->name;
-            $data['loggedin'] = '1';
-            $this->session->set_userdata($data);
-            redirect("Customers/success");
+
+            $check[0]->loggedin = '1';
+            $this->session->set_userdata((array)$check[0]);
+            $this->session->unset_userdata('password');
+            if ($this->session->has_userdata('referrer')){
+				redirect($this->session->referrer);
+			}
+            else {
+				redirect("Customers/success");
+			}
+
         }
     }
 
     public function logout() {
         $data = array(
-            'user',
-            'loggedin'
+			'email',
+			'first_name',
+			'last_name',
+			'phone_number',
+			'id',
+            'loggedin',
+			'referrer'
         );
         $this->session->unset_userdata($data);
         $this->login();
     }
+
+
 
 }

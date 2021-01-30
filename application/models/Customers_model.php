@@ -5,11 +5,21 @@ class Customers_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->database();
+		$this->db->db_debug = FALSE;
     }
+
+    public function get_customer_by_id($id){
+
+    	$query = $this->db->get_where('Customer', array('id' => $id));
+		if ($query->result()){
+			return $query->result()[0];
+		}
+		return null;
+	}
 
     public function get_customers() {
 
-        $this->db->db_debug = FALSE;
+
         $error = null;
         $query = $this->db->get('Customer');
         if ($query) {
@@ -20,18 +30,29 @@ class Customers_model extends CI_Model {
     }
 
     public function save($data) {
-        $this->db->db_debug = FALSE;
+
         $error = null;
-        //Generating a random safe for encryption ID. will also be used as salt for password
-        $id = $this->generateId();
-        $encrypted = $this->encrypt($data['password'], $id);
+
+        $encrypted = $this->encrypt($data['password'],  $data['id']);
         $data['password'] = $encrypted;
-        $data['id'] = $id;
+
         if (!$this->db->insert('Customer', $data)) {
             $error = $this->db->error();
         }
         return $error;
     }
+
+    public function update($id, $data){
+
+		$error = null;
+
+		if (!$this->db->update('Customer', $data, array('id' => $id))) {
+			$error = $this->db->error();
+		}
+		return $error;
+
+
+	}
 
     public function auth($data) {
         $new_data = array('email'=>$data['email']);
@@ -53,7 +74,7 @@ class Customers_model extends CI_Model {
         return $encrypted;
     }
 
-    private function generateId (){
+    public function generateId (){
 		$strong_result = true;
 		$bytes = openssl_random_pseudo_bytes(16, $strong_result);
 		return  bin2hex($bytes);
