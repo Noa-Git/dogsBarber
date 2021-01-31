@@ -46,7 +46,7 @@ class Customers extends CI_Controller {
 
     public function details() {
     	if ($this->session->loggedin == null){
-			$this->session->set_userdata('referrer',current_url());
+			$this->session->set_userdata('referrer',uri_string());
     		redirect("Customers/login");
 		}
     	$id = $this->session->id;
@@ -61,6 +61,19 @@ class Customers extends CI_Controller {
 		$this->load->view('customers/details', $data);
 		$this->load->view('templates/footer');
 
+	}
+
+	public function address(){
+		if ($this->session->loggedin == null){
+			$this->session->set_userdata('referrer',uri_string());
+			redirect("Customers/login");
+		}
+		$data['name']= $this->session->first_name;
+		$this->load->view('templates/styleCss');
+		$this->load->view('templates/customerDetailsCss');
+		$this->load->view('templates/header');
+		$this->load->view('customers/address', $data);
+		$this->load->view('templates/footer');
 	}
 
     public function save_customer() {
@@ -176,7 +189,48 @@ class Customers extends CI_Controller {
 	}
 
 
-    public function auth() {
+	public function update_address(){
+		$this->form_validation->reset_validation();
+		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
+		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
+		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
+
+
+		if ($this->form_validation->run() == false){
+			$errors = array(
+				'error' => true,
+				'street_error' => form_error('street'),
+				'house_error' => form_error('house'),
+				'city_error' => form_error('city'),
+				'zip_error' => form_error('zip')
+			);
+			echo json_encode($errors);
+			return;
+		}
+		//preparing data for db
+		$id = $this->session->id;
+
+		$address_data = array (
+			'street' => $this->input->post('street'),
+			'house_number' => $this->input->post('house'),
+			'city' => $this->input->post('city'),
+			'zip_code' => $this->input->post('zip'),
+		);
+
+		$error = $this->Address_model->update($id, $address_data);
+		if ($error) {
+			$errors = array('error' => true,'db_error' => $error);
+			echo json_encode($errors);
+			return;
+		}
+
+		echo json_encode(array('success' => true));
+
+	}
+
+
+	public function auth() {
         $data = array(
             'email' => $this->input->post('email'),
             'password' => $this->input->post('password')
