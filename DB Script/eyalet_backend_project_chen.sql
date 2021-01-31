@@ -48,13 +48,11 @@ CREATE TABLE Customer(
                                             id INT AUTO_INCREMENT PRIMARY KEY,
                                             employee_id INT,
                                             service_id INT,
-                                            additional_services_id INT,
                                             customer_id VARCHAR(32),
                                             order_date DATE,
                                             total_price INT,
                                             FOREIGN KEY(employee_id) REFERENCES Employee(id) ON DELETE CASCADE,
                                             FOREIGN KEY(service_id) REFERENCES Service(id) ON DELETE CASCADE,
-                                            FOREIGN KEY(additional_services_id) REFERENCES Additional_services(id) ON DELETE CASCADE,
                                             FOREIGN KEY(customer_id) REFERENCES Customer(id) ON DELETE CASCADE
                      ); CREATE TABLE Order_add(
                                                   additional_services_id INT,

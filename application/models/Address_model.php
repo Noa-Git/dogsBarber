@@ -30,14 +30,10 @@ class Address_model extends CI_Model
 	}
 
 	public function update($cust_id, $data){
-
 		$error = null;
-
 		if (!$this->db->update('address', $data, array('customer_id' => $cust_id))) {
 			$error = $this->db->error();
 		}
 		return $error;
-
-
 	}
 }

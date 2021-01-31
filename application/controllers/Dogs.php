@@ -14,7 +14,7 @@ class Dogs extends CI_Controller
 
 	public function add() {
 		if ($this->session->loggedin == null){
-			$this->session->set_userdata('referrer',current_url());
+			$this->session->set_userdata('referrer',uri_string());
 			redirect("Customers/login");
 		}
 		$id = $this->session->id;
