@@ -6,6 +6,7 @@ class Customers extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Customers_model');
+          $this->load->model('Orders_model');
 		$this->load->model('Dogs_model');
 		$this->load->model('Address_model');
         $this->load->helper('url');
