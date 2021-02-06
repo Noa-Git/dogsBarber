@@ -19,18 +19,13 @@
 	<select name="select_service" id="select_service">
 		<option selected disabled hidden>Please select a service</option>
 		<?php
-		foreach ($services as $service){
-			echo '<option value="'.$service->service_id.'">'.$service->service_name.' - '.$service->price.'</option>';
+		foreach ($services as$service_id=>$service){
+			echo '<option value="'.$service_id.'">'.$service['service_name'].' - '.$service['price'].'</option>';
 		}
 		?>
 	</select><br>
 	<select name="select_employee" id="select_employee">
-		<option selected disabled hidden>Choose your barber</option>
-		<?php
-		foreach ($services as $service){
-			echo '<option value="'.$service->employee_id.'">'.$service->employee_name.'</option>';
-		}
-		?>
+		<option disabled hidden selected>Select a service first</option>
 	</select>
 	<br>
 	<label>Date</label>
@@ -44,12 +39,13 @@
 	<?php
 		foreach ($add_services as $add){
 			echo '<label>'.$add->service_name.'</label>';
-			echo '<input type="checkbox" name="'.$add->service_name.'" id="'.$add->service_name.'">';
+			echo '<input type="checkbox" name="'.$add->id.'" id="'.$add->id.'">';
+			echo '<input id="cb_'.$add->id.'" type="hidden"  name = "cb_'.$add->id.'" value = "'.$add->price.'" />';
 			echo '<br>';
 		}
 	?>
 	<label>Total price: </label>
-	<input type="text" name="total" id="total" value="100" disabled>
+	<input type="text" name="total" id="total" value="0" disabled>
 	<br>
 	<input class="createForm" type="submit" id="save" name="submit" value="place order"/>
 	<input id="cancel" class="createForm" type="button"  value="Cancel" />
@@ -83,6 +79,11 @@
 
 <script>
 	$(document).ready(function () {
+
+		var total = 0;
+		var services_array =<?php echo json_encode($services);?>;
+
+		$("input[type=checkbox]").change(updatePrice);
 
 		$('#details_form').on('submit', function (event) {
 			event.preventDefault();
@@ -130,5 +131,46 @@
 			window.location.href = "<?php echo site_url('dogs/add'); ?>";
 
 		});
+
+		$("#select_service").change(function() {
+
+			var selected = $('option:selected',this).val();
+			var selectedText = $('option:selected',this).text() ;
+
+			var price= parseInt(selectedText.match(/(\d+)/));
+			updatePrice();
+
+			$("#select_employee").empty();
+			$("#select_employee").append($('<option>', {
+				selected: true,
+				disabled: true,
+				hidden: true,
+				text: "Choose your barber"
+			}));
+			services_array[selected]['employees'].map(function(employee){
+				$("#select_employee").append($('<option>', {
+					value: employee['employee_id'],
+					text: employee['employee_name']
+				}));
+			});
+
+
+		});
+
+		function updatePrice(){
+			var selectedText = $('option:selected','#select_service').text() ;
+
+			var price= parseInt(selectedText.match(/(\d+)/));
+			total = price ? price: 0;
+
+			$(':checkbox').each(function() {
+				if (this.checked){
+					var text_id = "#cb_" + this.id;
+					total += parseInt($(text_id).val());
+				}
+
+			});
+			$('#total').val(total);
+		}
 	});
 </script>

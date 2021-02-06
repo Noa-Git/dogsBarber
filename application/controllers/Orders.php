@@ -32,6 +32,7 @@ class Orders extends CI_Controller
 		$data['add_services'] = $this->Services_model->get_add_services();
 		$data['services'] = $this->get_available_services();
 
+
 		$this->load->view('templates/styleCss');
 		$this->load->view('templates/orderCss');
 		$this->load->view('templates/header');
@@ -54,6 +55,7 @@ class Orders extends CI_Controller
 			echo json_encode($errors);
 			return;
 		}
+		$data_in = $this->input->post();
 		echo json_encode(array('success' => true));
 	}
 
@@ -63,7 +65,24 @@ class Orders extends CI_Controller
 
 	private function get_available_services(){
 		//dummy data until Elad's implementation
-		return array('service_id'=>'1','employee_id'=>'1','employee_name'=>'Itamar','service_name'=>'Shower','price'=>'100');
+		return array(
+			"1"=>array(
+				'employees'=>array(
+					array('employee_id'=>'1','employee_name'=>'Itamar'),
+					array('employee_id'=>'2','employee_name'=>'Elad')
+				),
+				'service_name'=>'Shower',
+				'price'=>'100'
+			),
+			"2"=>array(
+				'employees'=>array(
+					array('employee_id'=>'1','employee_name'=>'Itamar'),
+					array('employee_id'=>'3','employee_name'=>'moshe')
+				),
+				'service_name'=>'Haircut',
+				'price'=>'150'
+			)
+		);
 	}
 
 
