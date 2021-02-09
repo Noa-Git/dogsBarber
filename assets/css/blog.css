@@ -1,0 +1,151 @@
+.items-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+	padding-bottom: 28px;
+}
+
+.item {
+    float: none !important;
+    max-width: 360px;
+    padding-bottom: 60px;
+    position: relative;
+	margin-bottom: 25px;
+}
+
+
+.page-header{
+    margin: 0px;
+    padding: 0px;
+	font-weight: 600;
+	font-size: 30px;
+    color: #173f6b;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 4px solid #eca6ca;
+       display: block;
+    color: #173f6b;
+    text-decoration: none;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+.text-block {
+  position: absolute;
+  top: 4%;
+  left: 40%;
+  color: black;
+  margin-left: 20%;
+    margin-right: 3%;
+    background-color:aliceblue; 
+    opacity: 0.8;
+    font-size: 20px;
+    font-weight:100; 
+    text-align: center;
+  
+}
+
+.container1 {
+  position: relative;
+    margin-bottom: 3%;
+
+}
+
+
+#shawer{
+     background-image:url(../Pictures/dogshawer.jpg);
+    background-repeat:no-repeat;
+    background-size: cover;
+    width: 100%;
+  height: 400px;
+}
+
+#fear{
+     background-image:url(../Pictures/fear.jpg);
+    background-repeat:no-repeat;
+    background-size: cover;
+     margin-bottom: 3%;
+   width: 100%;
+  height: 400px;
+    
+}
+
+
+#flea{
+     background-image:url(../Pictures/flea.jpg);
+    background-repeat:no-repeat;
+    background-size: cover;
+width: 100%;
+  height: 400px;
+     
+}
+
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}
+
+div>p{
+    text-align: right;
+    font-size: 20px;
+    line-height: 2;
+    
+}
+
+h3{
+   text-align: right;
+    font-weight: bolder;
+    
+}
+
+#accordion{
+    margin-left: 14%;
+    margin-right: 14%;
+    
+}
+
+#accordion h4{ 
+  background:none;
+  background-color:#afeaed;
+    color: black;
+    text-align: right;
+    height: 50px;
+    font-size: 20px;
+    
+}
+
+
+.open{
+    text-align: center;
+    font-size: 23px;
+    margin: auto;
+ 
+}
+
+.buttonp{
+  float: center;
+}
+
+#mycanvas{
+display: block;
+    margin: auto;
+
+}
+
+#canvas{
+   display: block;
+    margin-top: -9%;
+    margin-left: 35%;
+   
+}
+
+
+
+

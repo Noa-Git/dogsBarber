@@ -24,7 +24,7 @@
                     <a class="page-link" href="/orders/add">הזמנות</a>
                 </li>
                 <li class="nav-item li-style">
-                    <a class="page-link" href="/main/Blog">בלוג</a>
+                    <a class="page-link" href="/main/blog">בלוג</a>
                 </li>
                 <li class="nav-item li-style">
                     <a class="page-link" href="<?php echo base_url();?>customers/details">הפרופיל שלי</a>

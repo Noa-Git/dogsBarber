@@ -11,7 +11,7 @@ class Main extends CI_Controller{
     
     public function index() {
         $this->load->view('templates/styleCss');
-	$this->load->view('templates/orderCss');
+	$this->load->view('templates/homeCss');
 	$this->load->view('templates/header');
 	$this->load->view('main/home');
 	$this->load->view('templates/footer');
@@ -32,7 +32,7 @@ class Main extends CI_Controller{
     
      public function gallery() {
         $this->load->view('templates/styleCss');
-	$this->load->view('templates/orderCss');
+	$this->load->view('templates/galleryCss');
 	$this->load->view('templates/header');
 	$this->load->view('main/gallery');
 	$this->load->view('templates/footer');
@@ -41,9 +41,18 @@ class Main extends CI_Controller{
     
      public function blog() {
         $this->load->view('templates/styleCss');
-	$this->load->view('templates/orderCss');
+	$this->load->view('templates/blogCss');
 	$this->load->view('templates/header');
 	$this->load->view('main/blog');
+	$this->load->view('templates/footer');
+        
+    }
+    
+      public function continued_blog() {
+        $this->load->view('templates/styleCss');
+	$this->load->view('templates/blogCss');
+	$this->load->view('templates/header');
+	$this->load->view('main/continued_blog');
 	$this->load->view('templates/footer');
         
     }
