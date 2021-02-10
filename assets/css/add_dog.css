@@ -21,29 +21,23 @@
 	width: 40%;
 }*/
 
-
-form{
-	text-align:right;
-}
-select , option{
-	direction:rtl;
-}
 p[id*="no"]{
 	color:red;
 	float:left;
 	font-weight:bold;
 }
-label,form a{
+
+label{
 	font-weight:bold;
 }
+
+.mainWrraper{
+	margin-right: 5%;
+}
+
 select{
 	width:100%;
 	text-align:right;
 }
 
-.open{
-	text-align: center;
-	font-size: 23px;
-	margin: auto;
 
-}

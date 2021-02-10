@@ -28,9 +28,9 @@ class Dogs extends CI_Controller
 	public function save_dog(){
 
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|min_length[2]');
-		$this->form_validation->set_rules('age', 'Age', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|callback_validate_Hebrew_input');
+		$this->form_validation->set_rules('age', 'Age', 'required|numeric');
+		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric');
 
 		if ($this->form_validation->run() == false){
 			$errors = array(
@@ -62,5 +62,12 @@ class Dogs extends CI_Controller
 
 			echo json_encode(array('success' => true));
 		}
+	}
+
+	//callback function for save_dog()
+	public function validate_Hebrew_input($names)
+	{
+//		$this->form_validation->set_message('validate_Hebrew_input', 'Please use Hebrew');
+		return $names === '' || (bool) preg_match('/\p{Hebrew}/u', $names);
 	}
 }
