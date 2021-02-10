@@ -130,13 +130,13 @@ class Customers extends CI_Controller {
 
     public function update_customer(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('fname', 'first name', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('lname', 'last name', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
-		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
+		$this->form_validation->set_rules('street', 'Street', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('city', 'City', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[5]');
 
 
 		if ($this->form_validation->run() == false){
@@ -228,7 +228,7 @@ class Customers extends CI_Controller {
 
 	}
 
-	//callback function for save_customer() and update_address()
+	//callback function for save_customer() and update_address() and update_customer()
 	public function validate_alpha_input($names)
 	{
 		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]+/', $names);
