@@ -175,10 +175,10 @@ class Orders extends CI_Controller
 		// implement API call
 		$url = "http://api.positionstack.com/v1/forward?access_key=33576097aa621d30119b54a9621279d3&query=".urlencode($street).",".urlencode($city);
 		$response = file_get_contents($url);
+		$location_response = json_decode($response, true);
 
-		if ($response) {
+		if ($location_response['data']) {
 
-			$location_response = json_decode($response, true);
 			$location_data['latitude'] = $location_response['data'][0]['latitude'];
 			$location_data['longitude'] = $location_response['data'][0]['longitude'];
 
