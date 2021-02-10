@@ -1,63 +1,83 @@
 </head>
 <body>
-<main id="mainWrraper">
-	<h2>Details</h2>
+<main class="container" dir="rtl">
+	<h2>הפרופיל שלי</h2>
 
 	<h3 id="db_error" class="error"></h3>
 	<h3 id="success" class="success"></h3>
 
 	<?php echo form_open('Customers/update_customer', array('id'=>'details_form')); ?>
-	<label>First Name</label>
-	<input type="text" name="fname" <?php echo 'value="'.$customer->first_name.'"' ?> /><br>
-	<span id="fname_error" class="error"></span>
-	<label>Last Name</label>
-	<input type="text" name="lname" <?php echo 'value="'.$customer->last_name.'"' ?> /><br>
-	<span id="lname_error" class="error"></span>
-	<label>Phone Number</label>
-	<input type="text" name="phone" <?php echo 'value="'.$customer->phone_number.'"' ?> /><br>
+	<h4>פרטים אישיים:</h4>
+	<div class="row mb-4">
+		<div class="col-md-2">
+			<div class="form-outline">
+				<label>שם פרטי</label>
+				<input type="text" name="fname" <?php echo 'value="'.$customer->first_name.'"' ?> /><br>
+				<span id="fname_error" class="error"></span>
+				<label>משפחה</label>
+				<input type="text" name="lname" <?php echo 'value="'.$customer->last_name.'"' ?> /><br>
+				<span id="lname_error" class="error"></span>
+				<label class="col-md-3">מספר טלפון</label>
+				<input type="text" name="phone" <?php echo 'value="'.$customer->phone_number.'"' ?> /><br>
+			</div>
+		</div>
+	</div>
+	<h4>כתובת:</h4>
+	<div class="row mb-4">
+		<div class="col-md-2">
+			<div class="form-outline">
 	<span id="phone_error" class="error"></span>
-	<label>Street</label>
-	<input type="input" name="street" <?php echo 'value="'.$address->street.'"' ?> /><br>
-	<span id="street_error" class="error"></span>
-	<label>House Number</label>
-	<input type="input" name="house" <?php echo 'value="'.$address->house_number.'"' ?> /><br>
-	<span id="house_error" class="error"></span>
-	<label>City</label>
-	<input type="input" name="city" <?php echo 'value="'.$address->city.'"' ?> /><br>
-	<span id="city_error" class="error"></span>
-	<label>Zip Code</label>
-	<input type="input" name="zip" <?php echo 'value="'.$address->zip_code.'"' ?> /><br>
-	<span id="zip_error" class="error"></span>
+				<label>רחוב</label>
+				<input type="input" name="street" <?php echo 'value="'.$address->street.'"' ?> /><br>
+				<span id="street_error" class="error"></span>
+				<label class="col-md-3">מספר בית</label>
+				<input type="input" name="house" <?php echo 'value="'.$address->house_number.'"' ?> /><br>
+				<span id="house_error" class="error"></span>
+				<label>עיר</label>
+				<input type="input" name="city" <?php echo 'value="'.$address->city.'"' ?> /><br>
+				<span id="city_error" class="error"></span>
+				<label>מיקוד</label>
+				<input type="input" name="zip" <?php echo 'value="'.$address->zip_code.'"' ?> /><br>
+				<span id="zip_error" class="error"></span>
+			</div>
+		</div>
+	</div>
 
-	<input class="createForm" type="button" id="edit" value="Edit Details"/>
-	<input class="createForm" type="submit" id="save" name="submit" value="Save"/>
-	<input id="cancel" class="createForm" type="button"  value="Cancel" />
+	<input class="createForm" type="button" id="edit" value="עריכה"/>
+	<input class="createForm" type="submit" id="save" name="submit" value="שמירה"/>
+	<input id="cancel" class="createForm" type="button"  value="ביטול" />
 	<?php echo form_close(); ?>
 
-	<h3>Dogs:</h3>
-	<table>
-		<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Gender</th>
-			<th>Age</th>
-			<th>Size</th>
-			<th>Weight</th>
-		</tr>
-		<?php foreach ($dogs as $dog): ?>
-			<tr>
-				<td><input type="checkbox" <?php echo 'name="'.$dog->id.'"' ?> ></td>
-				<td><?php echo $dog->dog_name;?></td>
-				<td><?php echo $dog->gender?></td>
-				<td><?php echo $dog->age?></td>
-				<td><?php echo $dog->size?></td>
-				<td><?php echo $dog->weight?></td>
-			</tr>
+	<h3>כלבים:</h3>
+	<div class="row mb-4">
+		<div class="col-md-6 table-responsive-sm">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th scope="col">שם הכלב</th>
+						<th scope="col">מין</th>
+						<th scope="col">גיל</th>
+						<th scope="col">גודל</th>
+						<th scope="col">משקל</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($dogs as $dog): ?>
+					<tr>
+						<th scope="row"><?php echo $dog->dog_name;?></th>
+						<td><?php echo $dog->gender?></td>
+						<td><?php echo $dog->age?></td>
+						<td><?php echo $dog->size?></td>
+						<td><?php echo $dog->weight?></td>
+					</tr>
 
-		<?php endforeach; ?>
-	</table>
-	<button id="add_dog">Add Dog</button>
-	<button id="delete_dog">Delete selected Dogs</button>
+				<?php endforeach; ?>
+
+			</table>
+			<button id="add_dog">הוספת כלב</button>
+		</div>
+	</div>
+
 
 
 </main>
@@ -168,10 +188,7 @@
 
 		});
 
-		$('#delete_dog').on('click', function (){
-			alert('Not Implemented yet');
 
-		});
 
 
 	});

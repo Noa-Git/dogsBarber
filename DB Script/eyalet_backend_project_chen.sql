@@ -22,10 +22,11 @@ CREATE TABLE Customer(
                           weight FLOAT,
                           age INT,
                           size VARCHAR(20),
-                          gender VARCHAR(1),
+                          gender VARCHAR(10),
                           FOREIGN KEY(customer_id) REFERENCES Customer(id) ON DELETE CASCADE
+
       ); CREATE TABLE Employee(
-                                  id INT PRIMARY KEY,
+                                  id INT AUTO_INCREMENT PRIMARY KEY,
                                   first_name VARCHAR(30),
                                   last_name VARCHAR(30),
                                   city VARCHAR(30),
@@ -53,6 +54,8 @@ CREATE TABLE Customer(
                                             customer_id VARCHAR(32),
                                             order_date DATE,
                                             total_price INT,
+                                            dog_id int(11) NOT NULL,
+                                            FOREIGN KEY(dog_id) REFERENCES Dog(id) ON DELETE CASCADE,
                                             FOREIGN KEY(employee_id) REFERENCES Employee(id) ON DELETE CASCADE,
                                             FOREIGN KEY(service_id) REFERENCES Service(id) ON DELETE CASCADE,
                                             FOREIGN KEY(customer_id) REFERENCES Customer(id) ON DELETE CASCADE
@@ -67,39 +70,23 @@ ALTER TABLE
     Dog AUTO_INCREMENT = 2001;
 ALTER TABLE
     Orders AUTO_INCREMENT = 1000001;
-INSERT INTO `Service`(
-    `service_name`,
-    `price`,
-    `description`
-)
-VALUES(
-          'Haircut',
-          150,
-          'Haircut suitable for dog breed, bathing, perfuming, and drying'
-      );
-INSERT INTO `Service`(
-    `service_name`,
-    `price`,
-    `description`
-)
-VALUES(
-          'Grooming',
-          200,
-          'Thorough brushing and opening of knots, thinning of excess fur, bathing, perfuming and drying'
-      );
-INSERT INTO `Service`(
-    `service_name`,
-    `price`,
-    `description`
-)
-VALUES(
-          'Shower',
-          100,
-          'Rinse the dog with shampoo and conditioner and perfume'
-      );
-INSERT INTO `Additional_services`(`service_name`, `price`)
-VALUES('Ear cleaning', 20);
-INSERT INTO `Additional_services`(`service_name`, `price`)
-VALUES('Nail clipping', 30);
-INSERT INTO `Additional_services`(`service_name`, `price`)
-VALUES('Flea treatment', 50);
+INSERT INTO `Service` (`id`, `service_name`, `price`, `description`) VALUES
+(1, 'תספורת', 150, 'Haircut suitable for dog breed, bathing, perfuming, and drying'),
+(2, 'גרומינג', 200, 'Thorough brushing and opening of knots, thinning of excess fur, bathing, perfuming and drying'),
+(3, 'שטיפה בלבד', 100, 'Rinse the dog with shampoo and conditioner and perfume');
+
+INSERT INTO `Additional_services` (`id`, `service_name`, `price`) VALUES
+(1, 'ניקוי אזניים', 20),
+(2, 'קיצוץ ציפורניים', 30),
+(3, 'טיפול נגד פרעושים', 50);
+
+INSERT INTO `Employee` (`first_name`, `last_name`, `city`, `radius`, `latitude`, `longitude`) VALUES
+( 'משה', 'זוכמר', 'תל-אביב', 30, 32.0728, 34.8048),
+( 'עידן', 'חביב', 'רמת-גן', 30, 32.083, 34.8256);
+
+INSERT INTO `Employee_services` (`employee_id`, `service_id`) VALUES
+(300, 1),
+(300, 2),
+(301, 3),
+(301, 2);
+

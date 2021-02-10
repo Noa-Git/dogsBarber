@@ -3,13 +3,15 @@
 	font-size: 18px;
 	font-weight: bold;
 }
-
+.price {
+	font-size: 10px;
+}
 .success {
 	color: green;
 	font-size: 18px;
 	font-weight: bold;
 }
-label {
+/*label {
 	display: inline-block;
 	margin-right: 5px;
 	width: 20%;
@@ -17,4 +19,31 @@ label {
 
 .text{
 	width: 40%;
+}*/
+
+
+form{
+	text-align:right;
+}
+select , option{
+	direction:rtl;
+}
+p[id*="no"]{
+	color:red;
+	float:left;
+	font-weight:bold;
+}
+label,form a{
+	font-weight:bold;
+}
+select{
+	width:100%;
+	text-align:right;
+}
+
+.open{
+	text-align: center;
+	font-size: 23px;
+	margin: auto;
+
 }
