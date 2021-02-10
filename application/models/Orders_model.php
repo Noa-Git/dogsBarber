@@ -35,12 +35,15 @@ class Orders_model extends CI_Model
         
          public function save_order($data) {
 
-        $error = null;
+        $ret = array();
 
         if (!$this->db->insert('Orders', $data)) {
-            $error = $this->db->error();
+            $ret['error'] = $this->db->error();
         }
-        return $error;
+        else{
+        	$ret['id'] = $this->db->insert_id();
+		}
+        return $ret;
     }
     
        public function save_orders_add($data) {

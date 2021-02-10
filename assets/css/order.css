@@ -3,7 +3,9 @@
 	font-size: 18px;
 	font-weight: bold;
 }
-
+.price {
+	font-size: 10px;
+}
 .success {
 	color: green;
 	font-size: 18px;

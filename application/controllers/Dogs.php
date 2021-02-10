@@ -28,7 +28,7 @@ class Dogs extends CI_Controller
 	public function save_dog(){
 
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|alpha_numeric_spaces|min_length[2]');
+		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|min_length[2]');
 		$this->form_validation->set_rules('age', 'Age', 'required|numeric|min_length[1]');
 		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric|min_length[1]');
 

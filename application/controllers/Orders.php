@@ -10,6 +10,7 @@ class Orders extends CI_Controller
 		$this->load->model('Employee_model');
 		$this->load->model('Address_model');
 		$this->load->model('Services_model');
+		$this->load->model('Orders_model');
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->library('session');
@@ -44,19 +45,67 @@ class Orders extends CI_Controller
 
 	public function place_order(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('date', 'Date', 'required');
-		$this->form_validation->set_rules('time', 'Time', 'required');
+		$this->form_validation->set_rules('select_service', 'Service', 'required');
+		$this->form_validation->set_rules('select_dog', 'Dog', 'required');
+		$this->form_validation->set_rules('select_employee', 'employee', 'required');
 
+
+		$data_in = $this->input->post();
+//		$date_val = $this->validateDate($this->input->post('date'));
+//		$time_val = $this->val_time($this->input->post('time'));
+//		if (!$date_val || !$time_val || $this->form_validation->run() == false){
 		if ($this->form_validation->run() == false){
 			$errors = array(
 				'error' => true,
-				'date_error' => form_error('date'),
-				'time_error' => form_error('time')
+				'service_error' => form_error('select_service'),
+				'dog_error' => form_error('select_dog'),
+				'employee_error' => form_error('select_employee')
+				);
+//			if (!$date_val){
+//				$errors['date_error'] = 'תאריך צריך להיות במבנה דומה ל- 15.1.2020';
+//			}
+//			else{
+//				$errors['date_error'] = '';
+//			}
+//			if (!$time_val){
+//				$errors['time_error'] = 'שעה צריכה להיות במבנה של 24 שעות דומה ל- 14:25';
+//			}
+//			else{
+//				$errors['time_error'] = '';
+//			}
+
+
+			echo json_encode($errors);
+			return;
+		}
+
+
+		$data = array (
+			'employee_id' => $data_in['select_employee'],
+			'service_id' => $data_in['select_service'],
+			'customer_id' => $this->session->id,
+			'order_date' => strtotime($data_in['date'].' '.$data_in['time']),
+			'total_price' => $data_in['price'],
+			'dog_id' => $data_in['select_dog']
+		);
+		$order_id = $this->Orders_model->save_order($data);
+
+		if (array_key_exists('error',$order_id)){
+			$errors = array(
+				'error' => true,
+				'db_error' => $order_id['error']
 			);
 			echo json_encode($errors);
 			return;
 		}
-		$data_in = $this->input->post();
+		$oid = $order_id['id'];
+		foreach ($data_in as $key=>$item){
+			if ($item == 'on'){
+				$this->Orders_model->save_orders_add(array('additional_services_id'=>$key,'Orders_id'=>$oid));
+			}
+		}
+
+
 		echo json_encode(array('success' => true));
 	}
 
@@ -69,8 +118,8 @@ class Orders extends CI_Controller
 		$avialable_employees_by_service = array();
 
 		//get geocode
-		$location_data = getLatitudeAndLongitude();
-		if ($location_data['error']) {
+		$location_data = $this->getLatitudeAndLongitude();
+		if (array_key_exists('error',$location_data)) {
 			return null;
 		}
 
@@ -80,34 +129,34 @@ class Orders extends CI_Controller
 		$data['services'] = $this->Services_model->get_services();
 
 		//create return array structure by services
-		foreach ($services as $service) {
-			$servie_id = $service->id;
-			$service_name = $service->name;
+		foreach ($data['services']  as $service) {
+			$service_id = $service->id;
+			$service_name = $service->service_name;
 			$service_price = $service->price;
-			$avialable_employees_by_service[$servie_id] = array( 'employees' => array(), 'price'=> $service_price, 'service_name' => $service_name);
+			$avialable_employees_by_service[$service_id] = array( 'employees' => array(), 'price'=> $service_price, 'service_name' => $service_name);
 		}
 
 		// get available employees and their services
-		foreach ($emplyees as $employee) {
+		foreach ($data['employees'] as $employee) {
 
 			// calcDistance with each employee -> get a number which is the distance.
-			$distance = calc_distance($employee->latitude, $employee->longitude, $location_data->latitude, $location_data->longitude);
+			$distance = $this->calc_distance($employee->latitude, $employee->longitude, $location_data['latitude'], $location_data['longitude']);
 
 			// if the number is lower than employee raduis -> the employee is available
 			if ( $distance <= $employee->radius ) {
 
-				$employee_id = $emplyee->id;
-				$employee_fiest_name = $employee->first_name;
+				$employee_id = $employee->id;
+				$employee_first_name = $employee->first_name;
 				$employee_last_name = $employee->last_name;
-				$employee_full_name = $employee_fiest_name." ".$employee_last_name;
+				$employee_full_name = $employee_first_name." ".$employee_last_name;
 
 				//get employee's services
-				$data['tepm_services'] = $this->Employee_model->get_employee_services_by_emp_id($employee_id);
+				$data['temp_services'] = $this->Employee_model->get_employee_services_by_emp_id($employee_id);
 
 				//push employee's services to the returned array
-				foreach ($temp_services as $temp_service) {
+				foreach ($data['temp_services'] as $temp_service) {
 					$service_id = $temp_service->service_id;
-					$avialable_employees_by_service[$service_id]['employees'] = array('employee_id' => $employee_id, 'employee_name' => $employee_full_name);
+					array_push($avialable_employees_by_service[$service_id]['employees'],array('employee_id' => $employee_id, 'employee_name' => $employee_full_name));
 				}
 			}
 		}
@@ -120,18 +169,18 @@ class Orders extends CI_Controller
 		// 1. get user address from db
 		$id = $this->session->id;
 		$data['address'] = $this->Address_model->get_address_by_cust_id($id);
-		$street = $address->street;
-		$city = $address->city;
+		$street = $data['address']->street;
+		$city = $data['address']->city;
 
 		// implement API call
-		$url = "https://api.positionstack.com/v1/forward?access_key=33576097aa621d30119b54a9621279d3&query=".urlecode($street).",".urlencode($city);
+		$url = "http://api.positionstack.com/v1/forward?access_key=33576097aa621d30119b54a9621279d3&query=".urlencode($street).",".urlencode($city);
 		$response = file_get_contents($url);
 
 		if ($response) {
 
 			$location_response = json_decode($response, true);
-			$location_data['latitude'] = $location_response['data']['results'][0]['latitude'];
-			$location_data['longitude'] = $location_response['data']['results'][0]['longitude'];
+			$location_data['latitude'] = $location_response['data'][0]['latitude'];
+			$location_data['longitude'] = $location_response['data'][0]['longitude'];
 
 			return $location_data;
 		} else {
@@ -162,6 +211,15 @@ class Orders extends CI_Controller
 
 		// return a number
 		return ($res * $radius);
+	}
+
+	private function val_time($time){
+		return $this->validateDate($time, 'H:i');
+	}
+	private function validateDate($date, $format = 'd.m.Y')
+	{
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format($format) == $date;
 	}
 
 }

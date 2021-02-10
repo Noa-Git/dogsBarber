@@ -1,31 +1,37 @@
 </head>
 <body>
     <main id="mainWrraper">
-        <h2>Customer Registration</h2>
+        <h2>רישום לקוח חדש</h2>
 
 		<span id="db_error" class="error"></span>
 
 <?php echo form_open('Customers/save_customer', array('id'=>'register_form')); ?>
-        <label>First Name</label>
+		<div class="row mb-4">
+			<div class="col-md-2">
+				<div class="form-outline">
+        <label>שם פרטי</label>
         <input type="text" name="fname" required /><br>
 		<span id="fname_error" class="error"></span>
-        <label>Last Name</label>
+        <label>שם משפחה</label>
         <input type="text" name="lname" required /><br>
 		<span id="lname_error" class="error"></span>
-		<label>Email</label>
+		<label>דוא״ל</label>
         <input type="text" name="email" required /><br>
 		<span id="email_error" class="error"></span>
-        <label>Phone Number</label>
+        <label>מספר טלפון</label>
         <input type="text" name="phone" required /><br>
 		<span id="phone_error" class="error"></span>
-        <label>Password</label>
+        <label>סיסמה</label>
         <input type="password" name="password"  required/><br>
 		<span id="password_error" class="error"></span>
-        <label>Confirm Password</label>
+        <label>אימות סיסמה</label>
         <input type="password" name="confirmPassword"  required/><br>
 		<span id="confirmPassword_error" class="error"></span>
-        <input class="createForm" type="submit" name="submit" value="Register"/>
-        <input id="Cancel" class="createForm" type="button" name="submit" value="Cancel" />
+				</div>
+			</div>
+		</div>
+        <input class="createForm" type="submit" name="submit" value="רישום"/>
+        <input id="Cancel" class="createForm" type="button" name="submit" value="ביטול" />
 <?php echo form_close(); ?>
 
     </main>
@@ -33,7 +39,7 @@
 		$(document).ready(function (){
 			document.getElementById("Cancel").onclick = function ()
 			{
-				window.location.href = "<?php echo site_url('Customers/login'); ?>";
+				window.location.href = "<?php echo site_url('main'); ?>";
 			};
 
 			$('#register_form').on('submit', function (event) {

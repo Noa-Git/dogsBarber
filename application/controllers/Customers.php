@@ -80,8 +80,8 @@ class Customers extends CI_Controller {
     public function save_customer() {
 		$this->form_validation->reset_validation();
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('fname', 'first name', 'required|min_length[1]');
+		$this->form_validation->set_rules('lname', 'last name', 'required|min_length[1]');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
 		$this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
@@ -132,8 +132,8 @@ class Customers extends CI_Controller {
 
 	public function update_customer(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('fname', 'first name', 'required|min_length[1]');
+		$this->form_validation->set_rules('lname', 'last name', 'required|min_length[1]');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
 		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
 		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
