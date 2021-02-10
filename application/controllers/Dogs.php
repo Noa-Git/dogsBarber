@@ -28,7 +28,7 @@ class Dogs extends CI_Controller
 	public function save_dog(){
 
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|callback_validate_Hebrew_input');
+		$this->form_validation->set_rules('dog_name', 'Dog Name', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('age', 'Age', 'required|numeric');
 		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric');
 
@@ -65,9 +65,8 @@ class Dogs extends CI_Controller
 	}
 
 	//callback function for save_dog()
-	public function validate_Hebrew_input($names)
+	public function validate_alpha_input($names)
 	{
-//		$this->form_validation->set_message('validate_Hebrew_input', 'Please use Hebrew');
-		return $names === '' || (bool) preg_match('/\p{Hebrew}/u', $names);
+		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]+/', $names);
 	}
 }

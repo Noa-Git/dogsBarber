@@ -80,8 +80,8 @@ class Customers extends CI_Controller {
     public function save_customer() {
 		$this->form_validation->reset_validation();
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('fname', 'first name', 'required|callback_validate_Hebrew_input');
-		$this->form_validation->set_rules('lname', 'last name', 'required|callback_validate_Hebrew_input');
+		$this->form_validation->set_rules('fname', 'first name', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('lname', 'last name', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[10]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
 		$this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
@@ -190,8 +190,8 @@ class Customers extends CI_Controller {
 
 	public function update_address(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('street', 'Street', 'required|callback_validate_Hebrew_input');
-		$this->form_validation->set_rules('city', 'City', 'required|callback_validate_Hebrew_input');
+		$this->form_validation->set_rules('street', 'Street', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('city', 'City', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('house', 'House Number', 'required|numeric');
 		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[5]');
 
@@ -229,10 +229,9 @@ class Customers extends CI_Controller {
 	}
 
 	//callback function for save_customer() and update_address()
-	public function validate_Hebrew_input($names)
+	public function validate_alpha_input($names)
 	{
-//		$this->form_validation->set_message('validate_Hebrew_input', 'Please use Hebrew');
-		return $names === '' || (bool) preg_match('/\p{Hebrew}/u', $names);
+		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]+/', $names);
 	}
 
 
