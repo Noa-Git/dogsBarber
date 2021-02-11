@@ -1,36 +1,65 @@
 </head>
 <body>
-<main id="mainWrraper">
-	<h2>Add A New Dog</h2>
+<main class="mainWrraper" dir="rtl">
+	<h2>הוספת כלב חדש</h2>
 
 	<span id="db_error" class="error"></span>
 
 	<?php echo form_open('Dogs/save_dog', array('id'=>'add_dog_form')); ?>
-	<label>Dog Name</label>
-	<input type="text" name="dog_name" required /><br>
-	<span id="dog_name_error" class="error"></span>
-	<label>Gender</label>
-	<select name="gender" required>
-		<option value="m" selected>Male</option>
-		<option value="f">Female</option>
-	</select><br>
-	<label>Age</label>
-	<input type="text" name="age" required /><br>
-	<span id="age_error" class="error"></span>
-	<label>Size</label>
-	<select name="size" required>
-		<option value="extra small" >Extra Small</option>
-		<option value="small">Small</option>
-		<option value="medium" selected>Medium</option>
-		<option value="large">Large</option>
-		<option value="extra large">Extra Large</option>
-	</select><br>
-	<label>Weight</label>
-	<input type="text" name="weight"  required/> <span> Kg</span><br>
-	<span id="weight_error" class="error"></span>
-
-	<input class="createForm" type="submit" name="submit" value="Add"/>
-	<input id="Cancel" class="createForm" type="button" value="Cancel" />
+	<div class="row mb-4">
+		<div class="col-md-1">
+			<div class="form-outline">
+				<label>שם הכלב</label>
+				<input type="text" name="dog_name" required />
+				<span id="dog_name_error" class="error"></span>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-4">
+		<div class="col-md-1">
+			<div class="form-outline">
+				<label>מין</label>
+				<select name="gender" required>
+					<option value="זכר" selected>זכר</option>
+					<option value="נקבה">נקבה</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-4">
+		<div class="col-md-1">
+			<div class="form-outline">
+				<label>גיל</label>
+				<input type="text" name="age" required />
+				<span id="age_error" class="error"></span>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-4">
+		<div class="col-md-1">
+			<div class="form-outline">
+				<label>גודל</label>
+				<select name="size" required>
+					<option value="טוי" >טוי</option>
+					<option value="קטן">קטן</option>
+					<option value="בינוני" selected>בינוני</option>
+					<option value="גדול">גדול</option>
+					<option value="גדול מאד">גדול מאד</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-4">
+		<div class="col-md-1">
+			<div class="form-outline">
+				<label>משקל (ק״ג)</label>
+				<input type="text" name="weight"  required/>
+				<span id="weight_error" class="error"></span>
+			</div>
+		</div>
+	</div>
+	<input class="createForm" type="submit" name="submit" value="אישור"/>
+	<input id="Cancel" class="createForm" type="button" value="ביטול" />
 	<?php echo form_close(); ?>
 
 </main>

@@ -1,0 +1,17 @@
+
+.content-container,.intro-container {
+	clear: both;
+	margin: 40px auto ;
+	padding: 0;
+	width: 940px;
+}
+
+.content-container.gray{ background-color:#dcdcdc; width:798px; padding:10px; margin:15px 0px;}
+
+.clear {
+	border: 0;
+	clear: both;
+	height: 0;
+	margin: 0;
+	padding: 0;}
+

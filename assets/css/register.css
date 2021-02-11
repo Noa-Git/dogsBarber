@@ -3,20 +3,25 @@
 	font-size: 18px;
 	font-weight: bold;
 }
-
+.price {
+	font-size: 10px;
+}
 .success {
 	color: green;
 	font-size: 18px;
 	font-weight: bold;
 }
-label {
-	display: inline-block;
-	margin-right: 5px;
-	width: 20%;
+
+p[id*="no"]{
+	color:red;
+	float:left;
+	font-weight:bold;
 }
 
-.text{
-	width: 40%;
+label{
+	font-weight:bold;
 }
 
-
+.mainWrraper{
+	margin-right: 5%;
+}

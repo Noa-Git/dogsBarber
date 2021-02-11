@@ -9,6 +9,7 @@ class Customers extends CI_Controller {
           $this->load->model('Orders_model');
 		$this->load->model('Dogs_model');
 		$this->load->model('Address_model');
+		$this->load->model('Services_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('session');
@@ -54,7 +55,18 @@ class Customers extends CI_Controller {
 		$data['customer'] =$this->Customers_model->get_customer_by_id($id);
     	$data['dogs'] = $this->Dogs_model->get_dog_by_cust_id($id);
 		$data['address'] = $this->Address_model->get_address_by_cust_id($id);
+		$data['orders'] = $this->Orders_model->get_orders_by_cust_id($id);
+		$add_services = array();
+		foreach ($data['orders'] as $order){
+			$od = $order->id;
+			$add = $this->Services_model->get_add_services_by_order_id($order->id);
+			$add_services[$order->id] = array();
+			foreach ($add as $as){
+				array_push($add_services[$order->id],$as->service_name);
+			}
 
+		}
+		$data['add'] = $add_services;
 
 		$this->load->view('templates/styleCss');
 		$this->load->view('templates/customerDetailsCss');
@@ -80,9 +92,9 @@ class Customers extends CI_Controller {
     public function save_customer() {
 		$this->form_validation->reset_validation();
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('fname', 'first name', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('lname', 'last name', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[10]');
 		$this->form_validation->set_rules('password', 'password', 'required|min_length[4]');
 		$this->form_validation->set_rules('confirmPassword', 'confirm password', 'required|matches[password]');
 
@@ -101,8 +113,6 @@ class Customers extends CI_Controller {
 			return;
 		}
 
-
-
 		//preparing data for db
 		$id = $this->Customers_model->generateId();
          $data = array(
@@ -117,8 +127,9 @@ class Customers extends CI_Controller {
 
         $error = $this->Customers_model->save($data);
         if ($error) {
-            $errors = array('error' => true,'db_error' => $error);
-			echo json_encode($errors);
+
+			echo json_encode(array('error' => true,'db_error' => $error['message']));
+			return;
 
         } else {
         	$this->Address_model->save(array('customer_id'=>$id));
@@ -130,15 +141,15 @@ class Customers extends CI_Controller {
         }
     }
 
-	public function update_customer(){
+    public function update_customer(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('fname', 'first name', 'required|alpha|min_length[1]');
-		$this->form_validation->set_rules('lname', 'last name', 'required|alpha|min_length[1]');
+		$this->form_validation->set_rules('fname', 'first name', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('lname', 'last name', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('phone', 'phone number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
-		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
+		$this->form_validation->set_rules('street', 'Street', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('city', 'City', 'required|callback_validate_alpha_input');
 		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[5]');
 
 
 		if ($this->form_validation->run() == false){
@@ -192,10 +203,10 @@ class Customers extends CI_Controller {
 
 	public function update_address(){
 		$this->form_validation->reset_validation();
-		$this->form_validation->set_rules('street', 'Street', 'required|alpha_numeric_spaces|min_length[1]');
-		$this->form_validation->set_rules('city', 'City', 'required|alpha_dash|min_length[2]');
-		$this->form_validation->set_rules('house', 'House Number', 'required|numeric|min_length[1]');
-		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[1]');
+		$this->form_validation->set_rules('street', 'Street', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('city', 'City', 'required|callback_validate_alpha_input');
+		$this->form_validation->set_rules('house', 'House Number', 'required|numeric');
+		$this->form_validation->set_rules('zip', 'Zip Code', 'required|numeric|min_length[5]');
 
 
 		if ($this->form_validation->run() == false){
@@ -228,6 +239,12 @@ class Customers extends CI_Controller {
 
 		echo json_encode(array('success' => true));
 
+	}
+
+	//callback function for save_customer() and update_address() and update_customer()
+	public function validate_alpha_input($names)
+	{
+		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]+/', $names);
 	}
 
 

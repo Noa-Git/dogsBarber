@@ -1,28 +1,33 @@
 </head>
 <body>
-<main id="mainWrraper">
-	<h2>Enter your address</h2>
+<main class="container" dir="rtl">
+	<h2>עדכון כתובת</h2>
 
 	<h3 id="db_error" class="error"></h3>
 	<h3 id="success" class="success"></h3>
 
-	<h3>Hi, <?php echo $name ?></h3>
+	<h3>שלום, <?php echo $name ?></h3>
 	<?php echo form_open('Customers/update_address', array('id'=>'details_form')); ?>
-	<label>Street</label>
-	<input type="input" name="street" /><br>
-	<span id="street_error" class="error"></span>
-	<label>House Number</label>
-	<input type="input" name="house"/><br>
-	<span id="house_error" class="error"></span>
-	<label>City</label>
-	<input type="input" name="city"/><br>
-	<span id="city_error" class="error"></span>
-	<label>Zip Code</label>
-	<input type="input" name="zip"/><br>
-	<span id="zip_error" class="error"></span>
-
-	<input class="createForm" type="submit" id="save" name="submit" value="Save"/>
-	<input id="cancel" class="createForm" type="button"  value="Cancel" />
+	<div class="row mb-4">
+		<div class="col-md-2">
+			<div class="form-outline">
+				<label>רחוב</label>
+				<input type="input" name="street" /><br>
+				<span id="street_error" class="error"></span>
+				<label>מספר בית</label>
+				<input type="input" name="house"/><br>
+				<span id="house_error" class="error"></span>
+				<label>עיר</label>
+				<input type="input" name="city"/><br>
+				<span id="city_error" class="error"></span>
+				<label>מיקוד</label>
+				<input type="input" name="zip"/><br>
+				<span id="zip_error" class="error"></span>
+			</div>
+		</div>
+	</div>
+	<input class="createForm" type="submit" id="save" name="submit" value="שמירה"/>
+	<input id="cancel" class="createForm" type="button"  value="ביטול" />
 	<?php echo form_close(); ?>
 </main>
 <script>

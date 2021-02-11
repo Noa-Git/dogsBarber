@@ -21,10 +21,17 @@ class Orders_model extends CI_Model
         }
         
         public function get_orders_by_cust_id($cust_id) {
-            $error = null;
-            $data = array('customer_id' => $cust_id);
-	    $query = $this->db->get_where('Orders', $data);
-	     if ($query) {
+            $sql='SELECT Orders.id,order_date,total_price,Dog.dog_name,Service.service_name,Employee.first_name,Employee.last_name
+				  FROM Orders INNER JOIN Employee on Orders.employee_id=Employee.id
+   				  INNER JOIN Dog ON Orders.dog_id=Dog.id
+				  INNER JOIN Service ON Orders.service_id=Service.id
+				  WHERE Orders.customer_id= ?';
+
+			$error = null;
+            //$data = array('customer_id' => $cust_id);
+			$query = $this->db->query($sql, array($cust_id));
+            //$query = $this->db->get_where('Orders', $data);
+	     	if ($query) {
                 return $query->result();
             }
             $error = $this->db->error();
@@ -35,12 +42,15 @@ class Orders_model extends CI_Model
         
          public function save_order($data) {
 
-        $error = null;
+        $ret = array();
 
         if (!$this->db->insert('Orders', $data)) {
-            $error = $this->db->error();
+            $ret['error'] = $this->db->error();
         }
-        return $error;
+        else{
+        	$ret['id'] = $this->db->insert_id();
+		}
+        return $ret;
     }
     
        public function save_orders_add($data) {
