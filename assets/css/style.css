@@ -53,17 +53,7 @@ mark{
 #maintext{
     float: right;  
 }
-img.bath {
-    float: none;
-    margin-left: 0px;
-    border: none;
-    border-radius: inherit;
-    position: relative;
-    bottom: -55px;
-    max-width: 100%;
-    width:93%;
 
-}
 
 @media screen and (max-width: 1000px) {
     
