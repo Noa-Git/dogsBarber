@@ -9,7 +9,7 @@
           <h3 class="logo"><b>מספרת הכלבים של ישראל</b></h3>
          
         <div class="container center">
-        <nav class="navbar navbar-expand-sm center fs-3" dir="rtl">
+        <nav class="navbar navbar-expand-sm center fs-4" dir="rtl">
             <ul class="nav navbar-nav mx-auto">
                 <li class="nav-item li-style">
                   <a class="page-link" href="/main">דף הבית</a>

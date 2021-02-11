@@ -67,6 +67,7 @@ class Dogs extends CI_Controller
 	//callback function for save_dog()
 	public function validate_alpha_input($names)
 	{
-		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]+/', $names);
+		return $names === '' || (bool) preg_match('/[a-zA-Zא-ת][a-zA-Z א-ת]*/', $names);
+		//set_message
 	}
 }
