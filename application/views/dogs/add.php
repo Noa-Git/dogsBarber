@@ -1,6 +1,6 @@
 </head>
 <body>
-<main class="container" dir="rtl">
+<main class="mainWrraper" dir="rtl">
 	<h2>הוספת כלב חדש</h2>
 
 	<span id="db_error" class="error"></span>

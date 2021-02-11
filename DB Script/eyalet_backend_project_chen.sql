@@ -31,7 +31,7 @@ CREATE TABLE Customer(
                                   last_name VARCHAR(30),
                                   city VARCHAR(30),
                                   latitude FLOAT,
-                                  longitude FLOAT
+                                  longitude FLOAT,
                                   radius INT
          ); CREATE TABLE Service(
                                     id INT AUTO_INCREMENT PRIMARY KEY,
