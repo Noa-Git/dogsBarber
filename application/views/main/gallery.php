@@ -3,7 +3,10 @@
 <main>
         <br><br><br>
     <main class="container-fluid center gallery">
-        <h1>גלרייה </h1>
+          <div class="heding container">
+        <hr class="rounded">
+        <h1 class="h1">גלרייה </h1>
+        <hr class="rounded">
         <p><b>כאן תוכלו להתרשם מלקוחותינו המרוצים</b></p>
         <p><b>(Play - ועל הדרך להיכנס לאווירה במספרה בלחיצה על ה) </b></p>
         <audio controls autoplay="autoplay" loop muted>

@@ -48,4 +48,18 @@ transform:rotateY(180deg);
 .dark-image h2{
     color:white;
 }
+.heding{
 
+	text-align: center;
+	color:black;
+	font-family: 'Niconne', cursive;
+	font-weight: 700;
+        text-shadow: 5px 5px 0px #bdbcb9;
+                  
+}
+
+.h1{
+   text-align: center;
+    font-family: "Helvetica";
+    font-size:70px;
+}
