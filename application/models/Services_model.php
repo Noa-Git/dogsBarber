@@ -31,8 +31,12 @@ class Services_model extends CI_Model
         
         public function get_add_services_by_order_id($order_id){
 		$error = null;
-                $this->db->join('Order_add', 'Additional_services.id = Order_add.additional_services_id');
-		$query = $this->db->get_where('Additional_services',array('Orders_id'=>$order_id));
+		$sql = 'SELECT * 
+				FROM Additional_services INNER JOIN Order_add 
+				    ON Additional_services.id = Order_add.additional_services_id
+				WHERE Order_add.Orders_id = ? ';
+                //$this->db->join('Order_add', 'Additional_services.id = Order_add.additional_services_id');
+		$query = $this->db->query($sql,array($order_id));
                 
 		if ($query) {
 			return $query->result();

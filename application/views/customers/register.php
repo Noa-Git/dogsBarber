@@ -1,32 +1,32 @@
 </head>
 <body>
-    <main id="mainWrraper">
+    <main class="container" dir="rtl">
         <h2>רישום לקוח חדש</h2>
 
 		<span id="db_error" class="error"></span>
 
-<?php echo form_open('Customers/save_customer', array('id'=>'register_form')); ?>
+		<?php echo form_open('Customers/save_customer', array('id'=>'register_form')); ?>
 		<div class="row mb-4">
 			<div class="col-md-2">
 				<div class="form-outline">
-        <label>שם פרטי</label>
-        <input type="text" name="fname" required /><br>
-		<span id="fname_error" class="error"></span>
-        <label>שם משפחה</label>
-        <input type="text" name="lname" required /><br>
-		<span id="lname_error" class="error"></span>
-		<label>דוא״ל</label>
-        <input type="text" name="email" required /><br>
-		<span id="email_error" class="error"></span>
-        <label>מספר טלפון</label>
-        <input type="text" name="phone" required /><br>
-		<span id="phone_error" class="error"></span>
-        <label>סיסמה</label>
-        <input type="password" name="password"  required/><br>
-		<span id="password_error" class="error"></span>
-        <label>אימות סיסמה</label>
-        <input type="password" name="confirmPassword"  required/><br>
-		<span id="confirmPassword_error" class="error"></span>
+					<label>שם פרטי</label>
+					<input type="text" name="fname" required /><br>
+					<span id="fname_error" class="error"></span>
+					<label>שם משפחה</label>
+					<input type="text" name="lname" required /><br>
+					<span id="lname_error" class="error"></span>
+					<label>דוא״ל</label>
+					<input type="text" name="email" required /><br>
+					<span id="email_error" class="error"></span>
+					<label>מספר טלפון</label>
+					<input type="text" name="phone" required /><br>
+					<span id="phone_error" class="error"></span>
+					<label>סיסמה</label>
+					<input type="password" name="password"  required/><br>
+					<span id="password_error" class="error"></span>
+					<label>אימות סיסמה</label>
+					<input type="password" name="confirmPassword"  required/><br>
+					<span id="confirmPassword_error" class="error"></span>
 				</div>
 			</div>
 		</div>
@@ -37,14 +37,25 @@
     </main>
     <script>
 		$(document).ready(function (){
+
 			document.getElementById("Cancel").onclick = function ()
 			{
 				window.location.href = "<?php echo site_url('main'); ?>";
 			};
 
+			function clearMessages(){
+				$('#fname_error').html('');
+				$('#lname_error').html('');
+				$('#email_error').html('');
+				$('#phone_error').html('');
+				$('#password_error').html('');
+				$('#confirmPassword_error').html('');
+				$('#db_error').html('');
+			}
+
 			$('#register_form').on('submit', function (event) {
 				event.preventDefault();
-
+				clearMessages();
 				$.ajax({
 					url: "<?php echo base_url(); ?>Customers/save_customer",
 					method: "POST",
@@ -96,7 +107,15 @@
 							}
 						}
 						if (data.success){
-							window.location.href = "<?php echo site_url($_SESSION['referrer']); ?>";
+							<?php
+								if (isset($_SESSION['referrer'])){
+								 echo 'window.location.href = "'.site_url($_SESSION['referrer']).'";';
+								}
+								else {
+									echo 'window.location.href = "'.site_url('main').'";';
+								}
+							?>
+
 						}
 					}
 				})
@@ -105,5 +124,3 @@
 
     </script>
 
-</body>
-</html>

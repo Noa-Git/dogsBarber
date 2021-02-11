@@ -9,6 +9,7 @@ class Customers extends CI_Controller {
           $this->load->model('Orders_model');
 		$this->load->model('Dogs_model');
 		$this->load->model('Address_model');
+		$this->load->model('Services_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('session');
@@ -54,7 +55,18 @@ class Customers extends CI_Controller {
 		$data['customer'] =$this->Customers_model->get_customer_by_id($id);
     	$data['dogs'] = $this->Dogs_model->get_dog_by_cust_id($id);
 		$data['address'] = $this->Address_model->get_address_by_cust_id($id);
+		$data['orders'] = $this->Orders_model->get_orders_by_cust_id($id);
+		$add_services = array();
+		foreach ($data['orders'] as $order){
+			$od = $order->id;
+			$add = $this->Services_model->get_add_services_by_order_id($order->id);
+			$add_services[$order->id] = array();
+			foreach ($add as $as){
+				array_push($add_services[$order->id],$as->service_name);
+			}
 
+		}
+		$data['add'] = $add_services;
 
 		$this->load->view('templates/styleCss');
 		$this->load->view('templates/customerDetailsCss');
@@ -117,8 +129,9 @@ class Customers extends CI_Controller {
 
         $error = $this->Customers_model->save($data);
         if ($error) {
-            $errors = array('error' => true,'db_error' => $error);
-			echo json_encode($errors);
+
+			echo json_encode(array('error' => true,'db_error' => $error['message']));
+			return;
 
         } else {
         	$this->Address_model->save(array('customer_id'=>$id));

@@ -75,6 +75,46 @@
 
 			</table>
 			<button id="add_dog">הוספת כלב</button>
+
+
+		</div>
+	</div>
+	<h3>הזמנות:</h3>
+	<div class="row mb-4">
+		<div class="col-md-10 table-responsive-sm">
+			<table class="table table-striped table-hover">
+				<thead>
+				<tr>
+					<th scope="col">מספר הזמנה</th>
+					<th scope="col">תאריך</th>
+					<th scope="col">שם הכלב</th>
+					<th scope="col">שירות</th>
+					<th scope="col">ספר</th>
+					<th scope="col">שרותים נוספים</th>
+					<th scope="col">סה״כ לתשלום</th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php foreach ($orders as $order): ?>
+					<tr>
+						<th scope="row"><?php echo $order->id;?></th>
+						<td><?php echo $order->order_date?></td>
+						<td><?php echo $order->dog_name?></td>
+						<td><?php echo $order->service_name?></td>
+						<td><?php echo $order->first_name.' '.$order->last_name?></td>
+						<td>
+							<?php
+								foreach ($add[$order->id] as $as){
+									echo '<p>'.$as.'</p>';
+								}
+							?>
+						</td>
+						<td><?php echo $order->total_price?></td>
+					</tr>
+
+				<?php endforeach; ?>
+
+			</table>
 		</div>
 	</div>
 
@@ -93,11 +133,23 @@
 		lockFormToggle();
 		$('#edit').attr('disabled', false);
 
-
+		function clearMessages(){
+			$('#fname_error').html('');
+			$('#lname_error').html('');
+			$('#email_error').html('');
+			$('#phone_error').html('');
+			$('#password_error').html('');
+			$('#confirmPassword_error').html('');
+			$('#db_error').html('');
+			$('#street_error').html('');
+			$('#house_error').html('');
+			$('#city_error').html('');
+			$('#zip_error').html('');
+		}
 
 		$('#details_form').on('submit', function (event) {
 			event.preventDefault();
-
+			clearMessages();
 			$.ajax({
 				url: "<?php echo base_url(); ?>Customers/update_customer",
 				method: "POST",
