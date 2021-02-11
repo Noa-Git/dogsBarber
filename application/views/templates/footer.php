@@ -3,16 +3,34 @@
         <footer style="z-index: 1;">
             <h2 id="footer">CONTACT US</h2>
             <br>
-            <p id="footer"><b>Noa Ramon</b><a
-                    href="mailto:eyalet@mta.ac.il?subject=Mail from Our Site">eyalet@mta.ac.il</a></p>
-            <p id="footer"><b>Chen Weitzman</b><a
-                    href="mailto:chenwi@mta.ac.il?subject=Mail from Our Site">chenwi@mta.ac.il</a> </p>
+                
+<div class="LF">
+         <ul class="FS">
+             <li class="FS">
+            <p id="footer">| <a href="https://www.linkedin.com/in/itamar-glick-03735847/" class="fa fa-linkedin"></a>
+                <b>Itamar Glick</b>| </p>
+        </li>
+             <li class="FS">
+            <p id="footer">| <a href="https://www.linkedin.com/in/chen-weitzman-76927819a" class="fa fa-linkedin"></a>
+                <b>Chen Weitzman</b>| </p>
+          </li>
+             <li class="FS">
+            <p id="footer">| <a href="https://www.linkedin.com/in/noa-ramon-a499a2189/" class="fa fa-linkedin"></a>
+                <b>Noa Ramon</b>|</p>
+                 </li>
+                 
+                  <li class="FS">
+            <p id="footer">| <a href="https://www.linkedin.com/in/elad-bar-niv-96b6a0121/" class="fa fa-linkedin"></a>
+                <b>Elad Bar-Niv</b>|</p>
+                 </li>
+           </ul>
+    
+    </div>
+            <div class="RF">
+                The Academic College of Tel Aviv-Yaffo-
+                backend Final Project
+            </div>
 
-            <p id="footer"><b>Itamar Glick</b><a
-                    href="mailto:orzg@mta.ac.il?subject=Mail from Our Site">orzg@mta.ac.il</a></p>
-                    
-            <p id="footer"><b>Elad Bar-Niv </b><a
-                    href="mailto:orzg@mta.ac.il?subject=Mail from Our Site">orzg@mta.ac.il</a></p>
         </footer>
     </div>
 	</body>

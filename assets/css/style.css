@@ -14,10 +14,15 @@
 
 
 }
-
+.logo{
+    color:black;
+    border-radius: 50%;
+    text-align: center;
+}
 .hmpg-text{
     text-align: center;
     float:right;  
+    
 }
 a:hover{
     background-color:azure;
@@ -25,21 +30,19 @@ a:hover{
 mark{
     background-color: azure; 
     opacity: 0.9;
-    font-size: 29px;
-    font-weight: bold;   
+ 
 }
 
 .intro{
     background-color:#afeaed;
     margin-bottom: 5%;
     opacity: 0.8;
-    padding: 70px 40px 30px 40px;
-    -webkit-clip-path: polygon(1% 9%, 99% 0%, 98% 100%, 2% 98%);
     position: relative;
-    top: -37px;
+    top: -40px;
     max-width: 100%;
     margin: auto;
     bottom: -80px; 
+    padding: 20px 40px 30px 40px;
 }
 
 .whitebg{
@@ -50,25 +53,10 @@ mark{
 #maintext{
     float: right;  
 }
-img.bath {
-    float: none;
-    margin-left: 0px;
-    border: none;
-    border-radius: inherit;
-    position: relative;
-    bottom: -55px;
-    max-width: 100%;
-    width:93%;
 
-}
-.logo{
-    color:black;
-    border-radius: 50%;
-    text-align: center;
-}
 
-@media screen and (max-width: 800px) {
-    .bath{display:none;}
+@media screen and (max-width: 1000px) {
+    
     .intro{width:100%;}
 }
 body{
@@ -85,26 +73,112 @@ ul.nav{
 footer{
     clear:both;
     border:1px black solid;
-    background-color: #afeaed;
+    background-image: url("../Pictures/footer.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: arial;
     overflow: auto;
     margin-top: 3%;
     padding-top: 1%;
     opacity: 0.9;   
 }
-table{
-    margin: auto;
-}
+
 #footer{
-    text-align: center;   
+    text-align: center;
+    font-family: 'Courier New', monospace;
 }
 
-#test{
-      background-image:url(../Pictures/banner.jpg);
+
+
+#header {
+    background-image: url(../Pictures/banner.jpg);
     opacity: 0.85;
-    background-size:contain;
+    background-size: contain;
 }
 
 .page-link{
     color: black;
 }
+
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+  
+}
+.fa {
+  padding: 15px;
+  font-size: 30px;
+  width: 45px;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+
+
+ 
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.parallax {
+  /* The image used */
+  background-image: url("../Pictures/5SKqANg.jpg");
+
+  /* Set a specific height */
+  height: 800px;
+    width: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    padding: 70px 40px 30px 40px;
+    -webkit-clip-path: polygon(1% 9%, 99% 0%, 98% 100%, 2% 98%);
+}
+
+.heding{
+
+	    text-align: center;
+	    color:black;
+	   	font-family: 'Niconne', cursive;
+	    font-weight: 700;
+        text-shadow: 5px 5px 0px #bdbcb9;
+                  
+}
+
+.h1{
+   text-align: center;
+    font-family: "Helvetica";
+    font-size:70px;
+}
+
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}
+
+
+.FS{
+  
+     list-style: none;
+    display:inline-flex;
+}
+
+.LF{
+    
+    text-align: center;
+   margin: auto;
+       
+}
+
+.RF{
+    text-align: center;
+    margin: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    
+}
+

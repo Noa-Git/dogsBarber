@@ -1,10 +1,87 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 09/02/2021, 20:03:29
-    Author     : chen
-*/
+
+.center{
+    text-align: center;
+    margin: auto;
+    width:100%;
+
+
+}
+.logo{
+    color:black;
+    border-radius: 50%;
+    text-align: center;
+}
+.hmpg-text{
+    text-align: center;
+    float:right;  
+    
+}
+a:hover{
+    background-color:azure;
+}
+mark{
+    background-color: azure; 
+    opacity: 0.9;
+ 
+}
+
+.intro{
+    background-color:#afeaed;
+    margin-bottom: 5%;
+    opacity: 0.8;
+    position: relative;
+    top: -40px;
+    max-width: 100%;
+    margin: auto;
+    bottom: -80px; 
+    padding: 20px 40px 30px 40px;
+}
+
+.whitebg{
+    background-color:white;
+    opacity: 0.9;  
+
+}
+#maintext{
+    float: right;  
+}
+
+
+@media screen and (max-width: 1000px) {
+    
+    .intro{width:100%;}
+}
+body{
+    background-image:url(../Pictures/bg3.png); 
+    font-family: 'Arimo', sans-serif;
+}
+
+
+
+.page-link{
+    color: black;
+}
+
+
+
+.parallax {
+  /* The image used */
+  background-image: url("../Pictures/5SKqANg.jpg");
+
+  /* Set a specific height */
+  height: 800px;
+    width: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    padding: 70px 40px 30px 40px;
+    -webkit-clip-path: polygon(1% 9%, 99% 0%, 98% 100%, 2% 98%);
+}
+
+
+
+
 

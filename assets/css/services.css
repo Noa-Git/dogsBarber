@@ -29,7 +29,6 @@ h1{
 }
 
 
-
 .overlay {
   position: absolute; 
   bottom: 0;
@@ -79,32 +78,9 @@ border-color: black;
     
 }
 
-.text2{
-   font-size: 25px; 
-}
 
-.slideshow{
-     max-width: 1000px;
-  position: relative;
-  margin: auto;
-}
-/* Next & previous buttons */
-.prev, .next {
-    margin-top: 0.5%;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-    background-color: black;
-}
-
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: white;
-    color: black;
+.secH{
+    font-family: 'Courier New', monospace;
+    
 }
 
