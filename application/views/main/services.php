@@ -1,13 +1,14 @@
-</head>
 <body>
-<main>
-    <br><br> <br>
     
-   
 
-    <h1 style="text-align: center;float:center"><b>השירותים שלנו</b></h1>
+    <br><br><br>
+
+    <div class="heding container">
+        <hr class="rounded">
+    <h1 class="h1" style="text-align: center;float:center;">השירותים שלנו</h1>
+    <hr class="rounded">
+</div>
     <br><br>
-
 
     <div class="container-fluid">
         <div class="flip-box">
@@ -23,7 +24,7 @@
 
         </div>
         <div class="flip-box">
-            <img src="<?php echo base_url('assets/Pictures/dog-spa.jpg'); ?>" class="ser_img">
+            <img src="<?php echo base_url('assets/Pictures/7d3c2acb222c9d81718429ce28421ee6.jpg'); ?>" class="ser_img">
             <div class="overlay text-center">
                 <br>
                 <h1><b>גרומינג</b></h1>
@@ -48,57 +49,48 @@
         </div>
 
     </div>
-    <br>
-    <br>
-    <br>
+  
 
-    <div class="container">
-        <h2 class="section">המיוחדים שלנו</h2>
+    
+ <br><br><br>
+    <div class="container secH">
+         <hr class="rounded">
+        <h2 class="section" style="font-size: 50px;">המיוחדים שלנו</h2>
+        <hr class="rounded">
         <p class="section" id="text1">הספרים שלנו מתמחים גם בתספורות לכלבים גזעיים כמו פומרניין,שיצו וצ׳או צ׳או </p>
         <br>
     </div>
 
-    <div class="container slideshow" style="max-width:800px">
-        <img class="mySlides" src="<?php echo base_url('assets/Pictures/shizu.png'); ?>" style="width:100%">
-        <img class="mySlides" src="<?php echo base_url('assets/Pictures/pom.png'); ?>" style="width:100%; display: none;">
-        <img class="mySlides" src="<?php echo base_url('assets/Pictures/chau.png'); ?>" style="width:100%; display: none;">
-        
-        
-    </div>
+    <br>
     
-    <div class="container">
-        <div class="section">
-            <button class="button prev" onclick="plusDivs(-1)">❮ Prev</button>
-            <button class="button next" onclick="plusDivs(1)">Next ❯</button>
-        </div>
-    </div>
-    <br><br> 
     
-</main>
-    
-    <script>
-    var slideIndex = 1;
-showDivs(slideIndex);
-
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
-
-function currentDiv(n) {
-  showDivs(slideIndex = n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  if (n > x.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-  }
- 
-  x[slideIndex-1].style.display = "block";  
-  
-}
-
-    </script>
+<section id="slides" class="carousel slide container center" data-ride="carousel">
+	<ul class="carousel-indicators">
+		<li data-target="#slides" data-slide-to="0" class="active"></li>
+		<li data-target="#slides" data-slide-to="1"></li>
+		<li data-target="#slides" data-slide-to="2"></li>
+	</ul>
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<img src="<?php echo base_url('assets/Pictures/shizu.png'); ?>">
+			<div class="carousel-caption">
+				<h1 class="display-2">שייצו</h1>
+				<a href="/orders/add" class="btn btn-outline-light btn-dark" role="button" aria-pressed="True">הזמן עכשיו</a>
+			</div>
+		</div>
+		<div class="carousel-item" class="banner">
+			<img src="<?php echo base_url('assets/Pictures/pom.png'); ?>">
+			<div class="carousel-caption">
+			<h1 class="display-2">פומרניין</h1>
+				<a href="/orders/add" class="btn btn-outline-light btn-dark" role="button" aria-pressed="True">הזמן עכשיו</a>
+			</div>
+		</div>
+		<div class="carousel-item" class="banner">
+			<img src="<?php echo base_url('assets/Pictures/chau.png'); ?>">
+			<div class="carousel-caption">
+			<h1 class="display-2">צ׳או צ׳או</h1>
+			<a href="/orders/add" class="btn btn-outline-light btn-dark" role="button" aria-pressed="True">הזמן עכשיו</a>
+			</div>
+		</div>		
+	</div>
+</section>

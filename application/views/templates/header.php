@@ -3,7 +3,7 @@
 	<body>
 	<header>
             
-             <div class="container-fluid center" id="test">
+             <div class="container-fluid center" id="header">
         <br>
         <h1 class="logo"><b>Dog Barber</b></h1>
           <h3 class="logo"><b>מספרת הכלבים של ישראל</b></h3>

@@ -31,9 +31,11 @@ class Orders extends CI_Controller
 		$data['customer'] =$this->Customers_model->get_customer_by_id($id);
 		$data['dogs'] = $this->Dogs_model->get_dog_by_cust_id($id);
 		$data['add_services'] = $this->Services_model->get_add_services();
-		// To do: check services not null -> send to no_services_available
-		$data['services'] = $this->get_available_services();
 
+		$data['services'] = $this->get_available_services();
+		if ($data['services'] == null){
+			$this->no_service();
+		}
 
 		$this->load->view('templates/styleCss');
 		$this->load->view('templates/orderCss');
@@ -41,6 +43,15 @@ class Orders extends CI_Controller
 		$this->load->view('orders/new_order', $data);
 		$this->load->view('templates/footer');
 
+	}
+
+	public function no_service(){
+
+		$this->load->view('templates/styleCss');
+
+		$this->load->view('templates/header');
+		$this->load->view('orders/no_service');
+		$this->load->view('templates/footer');
 	}
 
 	public function place_order(){
@@ -51,9 +62,7 @@ class Orders extends CI_Controller
 
 
 		$data_in = $this->input->post();
-//		$date_val = $this->validateDate($this->input->post('date'));
-//		$time_val = $this->val_time($this->input->post('time'));
-//		if (!$date_val || !$time_val || $this->form_validation->run() == false){
+
 		if ($this->form_validation->run() == false){
 			$errors = array(
 				'error' => true,
@@ -61,30 +70,20 @@ class Orders extends CI_Controller
 				'dog_error' => form_error('select_dog'),
 				'employee_error' => form_error('select_employee')
 				);
-//			if (!$date_val){
-//				$errors['date_error'] = 'תאריך צריך להיות במבנה דומה ל- 15.1.2020';
-//			}
-//			else{
-//				$errors['date_error'] = '';
-//			}
-//			if (!$time_val){
-//				$errors['time_error'] = 'שעה צריכה להיות במבנה של 24 שעות דומה ל- 14:25';
-//			}
-//			else{
-//				$errors['time_error'] = '';
-//			}
+
 
 
 			echo json_encode($errors);
 			return;
 		}
 
+		$date = $data_in['date'].' '.$data_in['time'].':00';
 
 		$data = array (
 			'employee_id' => $data_in['select_employee'],
 			'service_id' => $data_in['select_service'],
 			'customer_id' => $this->session->id,
-			'order_date' => strtotime($data_in['date'].' '.$data_in['time']),
+			'order_date' => $date,
 			'total_price' => $data_in['price'],
 			'dog_id' => $data_in['select_dog']
 		);
@@ -128,12 +127,14 @@ class Orders extends CI_Controller
 		// get all services from DB
 		$data['services'] = $this->Services_model->get_services();
 
+		$services_num = 0;
 		//create return array structure by services
 		foreach ($data['services']  as $service) {
 			$service_id = $service->id;
 			$service_name = $service->service_name;
 			$service_price = $service->price;
 			$avialable_employees_by_service[$service_id] = array( 'employees' => array(), 'price'=> $service_price, 'service_name' => $service_name);
+			$services_num++;
 		}
 
 		// get available employees and their services
@@ -160,7 +161,17 @@ class Orders extends CI_Controller
 				}
 			}
 		}
+		//clean no service areas
 
+		foreach ($avialable_employees_by_service as $key=>$service){
+			if (empty($service['employees'])){
+				unset($avialable_employees_by_service[$key]);
+				$services_num--;
+			}
+		}
+		if ($services_num == 0){
+			return null;
+		}
 		return $avialable_employees_by_service;
 
 	}
