@@ -79,14 +79,3 @@ INSERT INTO `Additional_services` (`id`, `service_name`, `price`) VALUES
 (1, 'ניקוי אזניים', 20),
 (2, 'קיצוץ ציפורניים', 30),
 (3, 'טיפול נגד פרעושים', 50);
-
-INSERT INTO `Employee` (`first_name`, `last_name`, `city`, `radius`, `latitude`, `longitude`) VALUES
-( 'משה', 'זוכמר', 'תל-אביב', 30, 32.0728, 34.8048),
-( 'עידן', 'חביב', 'רמת-גן', 30, 32.083, 34.8256);
-
-INSERT INTO `Employee_services` (`employee_id`, `service_id`) VALUES
-(300, 1),
-(300, 2),
-(301, 3),
-(301, 2);
-

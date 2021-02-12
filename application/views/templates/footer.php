@@ -1,3 +1,4 @@
+
      <div class="container-fluid">
      <img src="<?php echo base_url('assets/Pictures/bg_contact2.png'); ?>" style="width:20%;margin-bottom: -7%; position:relative; z-index: 2;">
         <footer style="z-index: 1;">

@@ -28,7 +28,7 @@ class Services_model extends CI_Model
 		$error = $this->db->error();
 		return $error;
 	}
-        
+        //no use at below function
         public function get_add_services_by_order_id($order_id){
 		$error = null;
 		$sql = 'SELECT * 
