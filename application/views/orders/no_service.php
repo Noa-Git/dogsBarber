@@ -16,7 +16,7 @@
 				<div class="intro-text mid" style="position:relative">
 					<h1 style="margin-top:80px;margin-right:400px;padding-bottom:50px;float:left;line-height: 60px">מצטערים, אבל כרגע אין שירות באיזור מגוריך.</h1>
 					<p>&nbsp;</p>
-					<img src="<?php echo base_url('assets/pictures/noservice.png'); ?>" style="position:absolute;right:0;top:0"/>
+					<img src="<?php echo base_url('assets/Pictures/noservice.png'); ?>" style="position:absolute;right:0;top:0"/>
 					<br class="clear" />
 					<br class="clear" />
 				</div>

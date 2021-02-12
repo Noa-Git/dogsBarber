@@ -24,7 +24,7 @@ class Statistics extends CI_Controller
 		$this->load->view('templates/styleCss');
 		$this->load->view('templates/show_stat');
 		$this->load->view('templates/header');
-		$this->load->view('Statistics/display', $data);
+		$this->load->view('statistics/display', $data);
 		$this->load->view('templates/footer');
 	}
 }
