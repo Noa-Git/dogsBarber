@@ -1,4 +1,13 @@
-#piechart, #columnchart_values, #columnchart{
-	width: 500px;
-	height: 300px;
+.uni{
+	margin: auto;
+	width: 50%;
+}
+.chart-wrapper {
+	float: left;
+	width: 50%;
+}
+
+.charts {
+	width: 100%;
+	display: block;
 }

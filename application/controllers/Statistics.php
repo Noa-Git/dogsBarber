@@ -14,15 +14,15 @@ class Statistics extends CI_Controller
 			$this->session->set_userdata('referrer',uri_string());
 			redirect("Customers/login");
 		}
-		$data['name']= $this->session->first_name;
-		$data['services'] =$this->Statistics_model->get_services();
-		$data['orders_per_city'] = $this->Statistics_model->get_orders_per_city();
-		$data['orders_per_date'] = $this->Statistics_model->get_orders_this_year_by_month();
-		$city = $this->session->city;
 		$id = $this->session->id;
-		$data['cust_orders'] = $this->Statistics_model->get_cust_orders($id);
-//		$data['cust_city']=$this->Statistics_model->get_common_services_at_your_city($city);
+		$data['name']= $this->session->first_name;
+		$data['services'] =$this->Statistics_model->get_all_services();
+		$data['cust_services']= $this->Statistics_model->get_cust_services($id);
+		$data['add_services'] =$this->Statistics_model->get_all_add_services();
+		$data['cust_add_services']= $this->Statistics_model->get_cust_add_services($id);
+		$data['orders'] = $this->Statistics_model->get_orders($id);
 		$this->load->view('templates/styleCss');
+		$this->load->view('templates/show_stat');
 		$this->load->view('templates/header');
 		$this->load->view('Statistics/display', $data);
 		$this->load->view('templates/footer');
